@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    lang="pt-br">
+
+    <head th:include="layout :: htmlhead"></head>
+
+    <body>
+        <nav th:replace="layout :: menu">(menu)</nav>
+        <main class="container">
+            <form th:action="@{/agendamentos}"
+                method="POST"
+                th:object="${agendamento}">
+
+                <input type="hidden" th:field="*{id}">
+                
+                
+			<!-- nome -->                <br>
+
+                
+                
+                <div class="form-group">
+                    <label for="txtNome">Nome</label>
+                    <select th:field="*{clientes}">
+                        <option 
+                        th:each="umCliente : ${listaCliente}" 
+                        th:value="${umCliente.id}" 
+                        th:text="${umCliente.nome}"></option>
+                        <p th:if="${#fields.hasErrors('clientes')}"
+                        th:errors="*{nome}"
+                        class="alert alert-danger"></p>
+                    </select>
+                </div>
+                
+                <br>
+                
+
+                
+                <div class="form-group">
+                    <label for="txtDataSessao">Data da sessão</label>
+                    <input type="text" class="form-control"
+                        th:field="*{dataAtendimento}" id="txtDataSessao">
+                    <p th:if="${#fields.hasErrors('dataAtendimento')}"
+                        th:errors="*{dataAtendimento}"
+                        class="alert alert-danger"></p>
+                </div>
+                
+                <br>
+                 <div class="form-group">
+                    <label for="txtClinica">Clinica</label>
+                    <select th:field="*{clinica}">
+                        <option 
+                        th:each="umaClinica : ${listaClinica}" 
+                        th:value="${umaClinica.id}" 
+                        th:text="${umaClinica.nome}"></option>
+                    </select>
+                </div>
+ 			<!-- servico -->
+ 			<br>
+ 			
+                    <div class="form-group">
+                    <label for="txtServico">Servico</label>
+                    <select th:field="*{servico}">
+                        <option 
+                        th:each="umServico : ${listaServico}" 
+                        th:value="${umServico.id}" 
+                        th:text="${umServico.nome}"></option>
+                    </select>
+                </div>
+                <br>
+                
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        Agendar
+                    </button>
+                </div>
+
+            </form>
+        </main>
+        <div th:include="layout :: footer">(footer)</div>
+    </body>
+</html>

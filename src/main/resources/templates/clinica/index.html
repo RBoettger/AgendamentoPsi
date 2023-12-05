@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head th:include="layout :: htmlhead"></head>
+    <body>
+        <nav th:replace="layout :: menu">(menu)</nav>
+        <main>
+            <h1>Clinicas</h1>
+            <hr>
+
+            <a th:href="@{/clinicas/novo}"
+                class="btn btn-primary">Novo</a>
+
+            <table class="table" id="tabclinicas">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Endereço</th>
+                        <th>Telefone</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="umaClinica : ${listaClinicas}">
+                        <td th:text="${umaClinica.nome}"></td>
+						<td th:text="${umaClinica.endereco}"></td>
+                        <td th:text="${umaClinica.telefone}"></td>
+
+                        <td><a class="btn btn-secondary"
+                            th:href="@{'/clinicas/alterar/' + 
+                            ${umaClinica.id}}">Alterar</a>
+                            <button 
+                            th:data-id="${umaClinica.id}"
+                            class="btn btn-danger js-delete">Excluir</button>
+                        
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+        </main>
+
+        <div class="modal" tabindex="-1" id="modalclinica">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Excluir clinica</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Confirma a exclusão da clinica?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                  <button type="button" class="btn btn-primary" id="btnsim">SIM</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div th:include="layout :: footer">(footer)</div>
+        <script th:src="@{/script.js}"></script>
+    </body>
+</html>
